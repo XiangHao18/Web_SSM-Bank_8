@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.TransactionMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.pojo.Transaction">
+    <id column="transanction_id" jdbcType="INTEGER" property="transanctionId" />
+    <result column="card_id" jdbcType="VARCHAR" property="cardId" />
+    <result column="transanction_date" jdbcType="TIMESTAMP" property="transanctionDate" />
+    <result column="transanction_type" jdbcType="VARCHAR" property="transanctionType" />
+    <result column="transanction_pay" jdbcType="DOUBLE" property="transanctionPay" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    transanction_id, card_id, transanction_date, transanction_type, transanction_pay, 
+    remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.pojo.TransactionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Transaction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Transaction
+    where transanction_id = #{transanctionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Transaction
+    where transanction_id = #{transanctionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.pojo.TransactionExample">
+    delete from Transaction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.pojo.Transaction">
+    insert into Transaction (transanction_id, card_id, transanction_date, 
+      transanction_type, transanction_pay, remarks
+      )
+    values (#{transanctionId,jdbcType=INTEGER}, #{cardId,jdbcType=VARCHAR}, #{transanctionDate,jdbcType=TIMESTAMP}, 
+      #{transanctionType,jdbcType=VARCHAR}, #{transanctionPay,jdbcType=DOUBLE}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.pojo.Transaction">
+    insert into Transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transanctionId != null">
+        transanction_id,
+      </if>
+      <if test="cardId != null">
+        card_id,
+      </if>
+      <if test="transanctionDate != null">
+        transanction_date,
+      </if>
+      <if test="transanctionType != null">
+        transanction_type,
+      </if>
+      <if test="transanctionPay != null">
+        transanction_pay,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transanctionId != null">
+        #{transanctionId,jdbcType=INTEGER},
+      </if>
+      <if test="cardId != null">
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="transanctionDate != null">
+        #{transanctionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transanctionType != null">
+        #{transanctionType,jdbcType=VARCHAR},
+      </if>
+      <if test="transanctionPay != null">
+        #{transanctionPay,jdbcType=DOUBLE},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.pojo.TransactionExample" resultType="java.lang.Long">
+    select count(*) from Transaction
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Transaction
+    <set>
+      <if test="record.transanctionId != null">
+        transanction_id = #{record.transanctionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardId != null">
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transanctionDate != null">
+        transanction_date = #{record.transanctionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.transanctionType != null">
+        transanction_type = #{record.transanctionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transanctionPay != null">
+        transanction_pay = #{record.transanctionPay,jdbcType=DOUBLE},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Transaction
+    set transanction_id = #{record.transanctionId,jdbcType=INTEGER},
+      card_id = #{record.cardId,jdbcType=VARCHAR},
+      transanction_date = #{record.transanctionDate,jdbcType=TIMESTAMP},
+      transanction_type = #{record.transanctionType,jdbcType=VARCHAR},
+      transanction_pay = #{record.transanctionPay,jdbcType=DOUBLE},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.pojo.Transaction">
+    update Transaction
+    <set>
+      <if test="cardId != null">
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="transanctionDate != null">
+        transanction_date = #{transanctionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transanctionType != null">
+        transanction_type = #{transanctionType,jdbcType=VARCHAR},
+      </if>
+      <if test="transanctionPay != null">
+        transanction_pay = #{transanctionPay,jdbcType=DOUBLE},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where transanction_id = #{transanctionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.pojo.Transaction">
+    update Transaction
+    set card_id = #{cardId,jdbcType=VARCHAR},
+      transanction_date = #{transanctionDate,jdbcType=TIMESTAMP},
+      transanction_type = #{transanctionType,jdbcType=VARCHAR},
+      transanction_pay = #{transanctionPay,jdbcType=DOUBLE},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where transanction_id = #{transanctionId,jdbcType=INTEGER}
+  </update>
+</mapper>

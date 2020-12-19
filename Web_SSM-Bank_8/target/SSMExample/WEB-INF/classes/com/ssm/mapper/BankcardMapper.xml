@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.BankcardMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.pojo.Bankcard">
+    <id column="card_id" jdbcType="VARCHAR" property="cardId" />
+    <result column="cust_id" jdbcType="INTEGER" property="custId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_money" jdbcType="DOUBLE" property="createMoney" />
+    <result column="currency_type" jdbcType="VARCHAR" property="currencyType" />
+    <result column="deposit_type" jdbcType="VARCHAR" property="depositType" />
+    <result column="balance" jdbcType="DOUBLE" property="balance" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="report_loss" jdbcType="INTEGER" property="reportLoss" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    card_id, cust_id, create_date, create_money, currency_type, deposit_type, balance, 
+    password, report_loss
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.pojo.BankcardExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from BankCard
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BankCard
+    where card_id = #{cardId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from BankCard
+    where card_id = #{cardId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.pojo.BankcardExample">
+    delete from BankCard
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.pojo.Bankcard">
+    insert into BankCard (card_id, cust_id, create_date, 
+      create_money, currency_type, deposit_type, 
+      balance, password, report_loss
+      )
+    values (#{cardId,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createMoney,jdbcType=DOUBLE}, #{currencyType,jdbcType=VARCHAR}, #{depositType,jdbcType=VARCHAR}, 
+      #{balance,jdbcType=DOUBLE}, #{password,jdbcType=VARCHAR}, #{reportLoss,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.pojo.Bankcard">
+    insert into BankCard
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cardId != null">
+        card_id,
+      </if>
+      <if test="custId != null">
+        cust_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createMoney != null">
+        create_money,
+      </if>
+      <if test="currencyType != null">
+        currency_type,
+      </if>
+      <if test="depositType != null">
+        deposit_type,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="reportLoss != null">
+        report_loss,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cardId != null">
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createMoney != null">
+        #{createMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="currencyType != null">
+        #{currencyType,jdbcType=VARCHAR},
+      </if>
+      <if test="depositType != null">
+        #{depositType,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="reportLoss != null">
+        #{reportLoss,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.pojo.BankcardExample" resultType="java.lang.Long">
+    select count(*) from BankCard
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update BankCard
+    <set>
+      <if test="record.cardId != null">
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null">
+        cust_id = #{record.custId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createMoney != null">
+        create_money = #{record.createMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.currencyType != null">
+        currency_type = #{record.currencyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depositType != null">
+        deposit_type = #{record.depositType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balance != null">
+        balance = #{record.balance,jdbcType=DOUBLE},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportLoss != null">
+        report_loss = #{record.reportLoss,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update BankCard
+    set card_id = #{record.cardId,jdbcType=VARCHAR},
+      cust_id = #{record.custId,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      create_money = #{record.createMoney,jdbcType=DOUBLE},
+      currency_type = #{record.currencyType,jdbcType=VARCHAR},
+      deposit_type = #{record.depositType,jdbcType=VARCHAR},
+      balance = #{record.balance,jdbcType=DOUBLE},
+      password = #{record.password,jdbcType=VARCHAR},
+      report_loss = #{record.reportLoss,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.pojo.Bankcard">
+    update BankCard
+    <set>
+      <if test="custId != null">
+        cust_id = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createMoney != null">
+        create_money = #{createMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="currencyType != null">
+        currency_type = #{currencyType,jdbcType=VARCHAR},
+      </if>
+      <if test="depositType != null">
+        deposit_type = #{depositType,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="reportLoss != null">
+        report_loss = #{reportLoss,jdbcType=INTEGER},
+      </if>
+    </set>
+    where card_id = #{cardId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.pojo.Bankcard">
+    update BankCard
+    set cust_id = #{custId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_money = #{createMoney,jdbcType=DOUBLE},
+      currency_type = #{currencyType,jdbcType=VARCHAR},
+      deposit_type = #{depositType,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DOUBLE},
+      password = #{password,jdbcType=VARCHAR},
+      report_loss = #{reportLoss,jdbcType=INTEGER}
+    where card_id = #{cardId,jdbcType=VARCHAR}
+  </update>
+</mapper>
